@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.DAWII_CL2_UrteagaViktto.model.bd.Usuario;
 import pe.edu.cibertec.DAWII_CL2_UrteagaViktto.service.UsuarioService;
 
@@ -44,5 +41,21 @@ public class LoginController {
     public String guardarUsuario(@ModelAttribute Usuario usuario){
         usuarioService.saveUser(usuario);
         return "frontoffice/auth/frmLogin";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "frontoffice/auth/frmlogin";
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword() {
+        return "frontoffice/auth/frmChangePassword";
+    }
+
+    @PostMapping("/change-password")
+    public String updatePassword(@RequestParam("newPassword") String newPassword) {
+        return "frontoffice/auth/frmlogin";
     }
 }
